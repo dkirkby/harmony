@@ -9,14 +9,13 @@ fur.prototype =
 
 	prevMouseX: null, prevMouseY: null,
 
-	points: null, count: null,
+	points: null,
 
 	init: function( context )
 	{
 		this.context = context;
 
 		this.points = new Array();
-		this.count = 0;
 	},
 
 	destroy: function()
@@ -45,8 +44,8 @@ fur.prototype =
 
 		for (i = 0; i < this.points.length; i++)
 		{
-			dx = this.points[i][0] - this.points[this.count][0];
-			dy = this.points[i][1] - this.points[this.count][1];
+			dx = this.points[i][0] - mouseX;
+			dy = this.points[i][1] - mouseY;
 			d = dx * dx + dy * dy;
 
 			if (d < 2000 && Math.random() > d / 2000)
@@ -61,7 +60,6 @@ fur.prototype =
 		this.prevMouseX = mouseX;
 		this.prevMouseY = mouseY;
 
-		this.count ++;
 	},
 
 	strokeEnd: function()

@@ -1,5 +1,5 @@
 const REV = 6,
-       BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web", "", "simple", "squares", "ribbon", "", "circles", "grid"],
+       BRUSHES = ["sketchy", "shaded", "chrome", "fur", "longfur", "web", "", "simple", "squares", "ribbon", "", "circles", "grid", "", "dotty"],
        USER_AGENT = navigator.userAgent.toLowerCase();
 
 var SCREEN_WIDTH = window.innerWidth,

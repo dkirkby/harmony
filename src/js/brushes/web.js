@@ -9,7 +9,7 @@ web.prototype =
 
 	prevMouseX: null, prevMouseY: null,
 
-	points: null, count: null,
+	points: null,
 
 	init: function( context )
 	{
@@ -17,7 +17,6 @@ web.prototype =
 		this.context.globalCompositeOperation = 'source-over';
 
 		this.points = new Array();
-		this.count = 0;
 	},
 
 	destroy: function()
@@ -32,7 +31,7 @@ web.prototype =
 
 	stroke: function( mouseX, mouseY )
 	{
-		var i, dx, dy, d;
+		var i, x, y, dx, dy, d;
 
 		this.points.push( [ mouseX, mouseY ] );
 
@@ -47,15 +46,17 @@ web.prototype =
 
 		for (i = 0; i < this.points.length; i++)
 		{
-			dx = this.points[i][0] - this.points[this.count][0];
-			dy = this.points[i][1] - this.points[this.count][1];
+		  x = this.points[i][0];
+		  y = this.points[i][1];
+			dx = x - mouseX;
+			dy = y - mouseY;
 			d = dx * dx + dy * dy;
 
 			if (d < 2500 && Math.random() > 0.9)
 			{
 				this.context.beginPath();
-				this.context.moveTo( this.points[this.count][0], this.points[this.count][1]);
-				this.context.lineTo( this.points[i][0], this.points[i][1]);
+				this.context.moveTo( mouseX, mouseY);
+				this.context.lineTo(x, y);
 				this.context.stroke();
 			}
 		}
@@ -63,7 +64,6 @@ web.prototype =
 		this.prevMouseX = mouseX;
 		this.prevMouseY = mouseY;
 
-		this.count ++;
 	},
 
 	strokeEnd: function()

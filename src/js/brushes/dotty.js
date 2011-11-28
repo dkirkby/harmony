@@ -7,13 +7,13 @@ dotty.prototype =
 {
 	context: null,
 
-  npoints: null,
+  nsegment: null,
 	points: null,
 
 	init: function( context )
 	{
 		this.context = context;
-		this.npoints = 0;
+		this.nsegment = 0;
 		this.points = new Array();
 	},
 
@@ -24,27 +24,28 @@ dotty.prototype =
 	strokeStart: function( mouseX, mouseY )
 	{
 		this.points.push( [ mouseX, mouseY ] );
-	  this.npoints = 1;
+	  this.nsegment = 1;
 	},
 
 	stroke: function( mouseX, mouseY )
 	{
-	  var lastX,lastY,dx,dy,speedSq,speed;
+	  var npoints,lastX,lastY,dx,dy,speedSq,speed;
 	  
 	  // Remember this new mouse position.
 		this.points.push( [ mouseX, mouseY ] );
-		this.npoints++;
+		this.nsegment++;
 
     // Assign a speed value to the current move movement based on a weighted average of the
     // recent line segment lengths.
-    lastX = this.points[this.npoints-2][0];
-    lastY = this.points[this.npoints-2][1];
+    npoints = this.points.length;
+    lastX = this.points[npoints-2][0];
+    lastY = this.points[npoints-2][1];
     dx = mouseX - lastX;
     dy = mouseY - lastY;
     speedSq = dx*dx + dy*dy;
-    if(this.npoints > 2) {
-      dx = lastX - this.points[this.npoints-3][0];
-      dy = lastY - this.points[this.npoints-3][1];
+    if(this.nsegment > 2) {
+      dx = lastX - this.points[npoints-3][0];
+      dy = lastY - this.points[npoints-3][1];
       speedSq = (4*speedSq + dx*dx + dy*dy)/5;
     }
     speed = Math.sqrt(speedSq);
@@ -57,13 +58,9 @@ dotty.prototype =
 		this.context.beginPath();
 		this.context.arc(mouseX,mouseY,speed,0,2*Math.PI,true);
 		this.context.stroke();
-
-		this.prevMouseX = mouseX;
-		this.prevMouseY = mouseY;
 	},
 
 	strokeEnd: function()
-	{
-		
+	{	
 	}
 }
